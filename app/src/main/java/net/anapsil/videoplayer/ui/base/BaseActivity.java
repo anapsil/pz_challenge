@@ -3,10 +3,8 @@ package net.anapsil.videoplayer.ui.base;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import net.anapsil.videoplayer.BR;
 import net.anapsil.videoplayer.ui.base.viewmodel.BaseViewModel;
@@ -27,8 +25,8 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
     }
 
     @Override
-    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
         viewModel.onViewCreated();
     }
 

@@ -33,7 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="4dp"
+            app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:spanCount="2"
             tools:listitem="@layout/item_videos"/>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

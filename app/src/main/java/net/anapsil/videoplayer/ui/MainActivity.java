@@ -20,6 +20,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         setSupportActionBar(getBinding().toolbar);
 
         getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+        getBinding().videosList.setHasFixedSize(true);
+        getBinding().videosList.setAdapter(getViewModel().getAdapter());
     }
 
     @Override
@@ -29,6 +32,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     protected MainViewModel getViewModel() {
-        return new MainViewModel();
+        return new MainViewModel(this);
     }
 }

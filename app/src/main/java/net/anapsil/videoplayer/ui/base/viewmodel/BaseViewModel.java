@@ -14,11 +14,13 @@ public abstract class BaseViewModel extends BaseObservable {
 
     public void onViewCreated() {
         compositeDisposable = new CompositeDisposable();
-        loadData();
+//        loadData();
     }
 
     public void onDestroyView() {
-        compositeDisposable.dispose();
+        if (compositeDisposable != null) {
+            compositeDisposable.dispose();
+        }
     }
 
     protected abstract void loadData();

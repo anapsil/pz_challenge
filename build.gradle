@@ -35,10 +35,11 @@ ext {
 
     // App dependencies
     supportLibraryVersion = "27.0.2"
+    rxjava2Version = '2.1.0'
+    rxandroid2Version = '2.0.1'
     retrofitVersion = "2.3.0"
     okhttpVersion = "3.8.1"
-    rxandroid2Version = '2.0.1'
-    rxjava2Version = '2.1.0'
+    picassoVersion = "2.5.2"
     dagger2Version = '2.11'
     parcelerVersion = "1.1.9"
 }

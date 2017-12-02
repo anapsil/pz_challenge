@@ -7,4 +7,13 @@ import android.app.Application;
  */
 
 public class VideoPlayerApplication extends Application {
+    static String assetsLocation;
+
+    public static String getAssetsLocation() {
+        return assetsLocation;
+    }
+
+    public static void setAssetsLocation(String location) {
+        assetsLocation = location;
+    }
 }
