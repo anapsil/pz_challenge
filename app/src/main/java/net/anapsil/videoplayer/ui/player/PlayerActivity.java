@@ -5,7 +5,12 @@ import android.support.annotation.Nullable;
 
 import net.anapsil.videoplayer.R;
 import net.anapsil.videoplayer.databinding.ActivityPlayerBinding;
+import net.anapsil.videoplayer.model.Content;
 import net.anapsil.videoplayer.ui.base.BaseActivity;
+
+import org.parceler.Parcels;
+
+import java.util.List;
 
 /**
  * @author anapsil
@@ -21,6 +26,14 @@ public class PlayerActivity extends BaseActivity<ActivityPlayerBinding, PlayerVi
         setSupportActionBar(getBinding().toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        init();
+    }
+
+    private void init() {
+        List<Content> contentList = Parcels.unwrap(getIntent().getParcelableExtra("ARGS"));
+
+//        getBinding().viewPager.setAdapter(new VideosPagerAdapter(getSupportFragmentManager(), contentList));
     }
 
     @Override

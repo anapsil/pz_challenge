@@ -27,6 +27,10 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosViewHolder> {
         this.objects = objects;
     }
 
+    public List<Content> getObjects() {
+        return objects;
+    }
+
     public void setObjects(List<Content> objects) {
         this.objects = objects;
         notifyDataSetChanged();
@@ -41,6 +45,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosViewHolder> {
     @Override
     public void onBindViewHolder(VideosViewHolder holder, int position) {
         holder.getViewModel().update(objects.get(position));
+        holder.getViewModel().setAdapter(this);
         holder.executePendingBindings();
     }
 

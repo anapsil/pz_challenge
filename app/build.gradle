@@ -54,6 +54,9 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
 
+    implementation "com.google.android.exoplayer:exoplayer-core:$rootProject.exoplayerVersion"
+    implementation "com.google.android.exoplayer:exoplayer-ui:$rootProject.exoplayerVersion"
+
     implementation "org.parceler:parceler-api:$rootProject.parcelerVersion"
 
     testImplementation 'junit:junit:4.12'
