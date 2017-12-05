@@ -4,11 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import net.anapsil.videoplayer.R;
+import net.anapsil.videoplayer.VideoPlayerApplication;
 import net.anapsil.videoplayer.databinding.ActivityPlayerBinding;
 import net.anapsil.videoplayer.model.Content;
 import net.anapsil.videoplayer.ui.base.BaseActivity;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -18,6 +17,9 @@ import java.util.List;
  */
 
 public class PlayerActivity extends BaseActivity<ActivityPlayerBinding, PlayerViewModel> {
+    private List<Content> contentList;
+    private int selectedItem;
+    private PlayerViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,10 +32,22 @@ public class PlayerActivity extends BaseActivity<ActivityPlayerBinding, PlayerVi
         init();
     }
 
-    private void init() {
-        List<Content> contentList = Parcels.unwrap(getIntent().getParcelableExtra("ARGS"));
+    @Override
+    protected void createViewModel() {
+        viewModel = new PlayerViewModel(this);
+    }
 
-//        getBinding().viewPager.setAdapter(new VideosPagerAdapter(getSupportFragmentManager(), contentList));
+    private void init() {
+        contentList = getIntent().getParcelableArrayListExtra("ARGS");
+        selectedItem = getIntent().getIntExtra("ARGS_POSITION", 0);
+        getBinding().includedView.player.requestFocus();
+        String videoUrl = String.format("%s/%s", VideoPlayerApplication.getAssetsLocation(), contentList.get(selectedItem).getBg());
+        String audioUrl = String.format("%s/%s", VideoPlayerApplication.getAssetsLocation(), contentList.get(selectedItem).getSg());
+        getViewModel().prepareAudioPlayer(audioUrl);
+        getViewModel().prepareVideoPlayer(videoUrl);
+
+        getBinding().includedView.player.setPlayer(getViewModel().getVideoPlayer());
+
     }
 
     @Override
@@ -43,6 +57,6 @@ public class PlayerActivity extends BaseActivity<ActivityPlayerBinding, PlayerVi
 
     @Override
     protected PlayerViewModel getViewModel() {
-        return new PlayerViewModel();
+        return viewModel;
     }
 }

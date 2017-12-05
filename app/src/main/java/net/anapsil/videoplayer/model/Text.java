@@ -1,23 +1,33 @@
 package net.anapsil.videoplayer.model;
 
-import org.parceler.Parcel;
-import org.parceler.ParcelConstructor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
- * Created by anapsil on 02/12/17.
+ * @author anapsil
+ * @since 1.0.0
  */
-@Parcel(Parcel.Serialization.BEAN)
-public class Text {
+public class Text implements Parcelable {
+    public static final Parcelable.Creator<Text> CREATOR = new Parcelable.Creator<Text>() {
+        @Override
+        public Text createFromParcel(Parcel source) {
+            return new Text(source);
+        }
+
+        @Override
+        public Text[] newArray(int size) {
+            return new Text[size];
+        }
+    };
     private String txt;
     private float time;
 
     public Text() {
     }
 
-    @ParcelConstructor
-    public Text(String txt, float time) {
-        this.txt = txt;
-        this.time = time;
+    protected Text(Parcel in) {
+        this.txt = in.readString();
+        this.time = in.readFloat();
     }
 
     public String getTxt() {
@@ -34,5 +44,16 @@ public class Text {
 
     public void setTime(float time) {
         this.time = time;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.txt);
+        dest.writeFloat(this.time);
     }
 }

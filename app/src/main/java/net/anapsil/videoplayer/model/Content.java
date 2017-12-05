@@ -1,8 +1,8 @@
 package net.anapsil.videoplayer.model;
 
-import org.parceler.Parcel;
-import org.parceler.ParcelConstructor;
+import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,8 +10,18 @@ import java.util.List;
  * @since 1.0.0
  */
 
-@Parcel(Parcel.Serialization.BEAN)
-public class Content {
+public class Content implements Parcelable {
+    public static final Parcelable.Creator<Content> CREATOR = new Parcelable.Creator<Content>() {
+        @Override
+        public Content createFromParcel(android.os.Parcel source) {
+            return new Content(source);
+        }
+
+        @Override
+        public Content[] newArray(int size) {
+            return new Content[size];
+        }
+    };
     private String name;
     private String bg;
     private String im;
@@ -21,13 +31,13 @@ public class Content {
     public Content() {
     }
 
-    @ParcelConstructor
-    public Content(String name, String bg, String im, String sg, List<Text> txts) {
-        this.name = name;
-        this.bg = bg;
-        this.im = im;
-        this.sg = sg;
-        this.txts = txts;
+    protected Content(android.os.Parcel in) {
+        this.name = in.readString();
+        this.bg = in.readString();
+        this.im = in.readString();
+        this.sg = in.readString();
+        this.txts = new ArrayList<Text>();
+        in.readList(this.txts, Text.class.getClassLoader());
     }
 
     public String getName() {
@@ -68,5 +78,19 @@ public class Content {
 
     public void setTxts(List<Text> txts) {
         this.txts = txts;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(android.os.Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.bg);
+        dest.writeString(this.im);
+        dest.writeString(this.sg);
+        dest.writeList(this.txts);
     }
 }

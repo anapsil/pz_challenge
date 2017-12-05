@@ -21,6 +21,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createViewModel();
         performDataBinding();
     }
 
@@ -42,6 +43,8 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
         binding.setVariable(BR.vm, viewModel);
         binding.executePendingBindings();
     }
+
+    protected abstract void createViewModel();
 
     public B getBinding() {
         return binding;

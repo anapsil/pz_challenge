@@ -58,6 +58,7 @@ dependencies {
     implementation "com.google.android.exoplayer:exoplayer-ui:$rootProject.exoplayerVersion"
 
     implementation "org.parceler:parceler-api:$rootProject.parcelerVersion"
+    annotationProcessor "org.parceler:parceler:$rootProject.parcelerVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1', {

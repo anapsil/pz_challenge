@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import net.anapsil.videoplayer.R;
 import net.anapsil.videoplayer.model.Content;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @author anapsil
@@ -17,23 +16,19 @@ import java.util.List;
  */
 
 public class VideosAdapter extends RecyclerView.Adapter<VideosViewHolder> {
-    private List<Content> objects;
+    private ArrayList<Content> objects;
 
     public VideosAdapter() {
-        objects = Collections.emptyList();
+        objects = new ArrayList<>();
     }
 
-    public VideosAdapter(List<Content> objects) {
-        this.objects = objects;
-    }
-
-    public List<Content> getObjects() {
+    public ArrayList<Content> getObjects() {
         return objects;
     }
 
-    public void setObjects(List<Content> objects) {
-        this.objects = objects;
-        notifyDataSetChanged();
+    public void addItem(Content content) {
+        objects.add(content);
+        notifyItemInserted(objects.size() - 1);
     }
 
     @Override
@@ -46,6 +41,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosViewHolder> {
     public void onBindViewHolder(VideosViewHolder holder, int position) {
         holder.getViewModel().update(objects.get(position));
         holder.getViewModel().setAdapter(this);
+        holder.getViewModel().setPosition(position);
         holder.executePendingBindings();
     }
 

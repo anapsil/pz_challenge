@@ -12,11 +12,13 @@ import net.anapsil.videoplayer.ui.base.BaseViewHolder;
 public class VideosViewHolder extends BaseViewHolder<ItemVideosBinding, VideosItemViewModel> {
     private VideosItemViewModel videosItemViewModel;
 
+
     public VideosViewHolder(View itemView) {
         super(itemView);
         videosItemViewModel = new VideosItemViewModel();
         bindContent(itemView);
     }
+
 
     @Override
     public VideosItemViewModel getViewModel() {
