@@ -40,12 +40,16 @@ public class PlayerActivity extends BaseActivity<ActivityPlayerBinding, PlayerVi
     private void init() {
         contentList = getIntent().getParcelableArrayListExtra("ARGS");
         selectedItem = getIntent().getIntExtra("ARGS_POSITION", 0);
-        getBinding().includedView.player.requestFocus();
+        setupPlayer();
+    }
+
+    private void setupPlayer() {
         String videoUrl = String.format("%s/%s", VideoPlayerApplication.getAssetsLocation(), contentList.get(selectedItem).getBg());
         String audioUrl = String.format("%s/%s", VideoPlayerApplication.getAssetsLocation(), contentList.get(selectedItem).getSg());
         getViewModel().prepareAudioPlayer(audioUrl);
         getViewModel().prepareVideoPlayer(videoUrl);
 
+        getBinding().includedView.player.requestFocus();
         getBinding().includedView.player.setPlayer(getViewModel().getVideoPlayer());
     }
 
