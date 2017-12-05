@@ -38,7 +38,7 @@ public class VideoSyncEventListener implements Player.EventListener {
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
         if (playbackState == Player.STATE_READY) {
-            audioPlayer.setPlayWhenReady(true);
+            audioPlayer.setPlayWhenReady(playWhenReady);
         }
     }
 

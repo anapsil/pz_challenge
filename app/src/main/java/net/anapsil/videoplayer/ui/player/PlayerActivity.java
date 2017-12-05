@@ -47,7 +47,6 @@ public class PlayerActivity extends BaseActivity<ActivityPlayerBinding, PlayerVi
         getViewModel().prepareVideoPlayer(videoUrl);
 
         getBinding().includedView.player.setPlayer(getViewModel().getVideoPlayer());
-
     }
 
     @Override
