@@ -4,16 +4,14 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
 
-        <!--<android.support.v4.view.ViewPager-->
-        <!--android:id="@+id/view_pager"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"/>-->
-
-        <include
-            android:id="@+id/included_view"
-            layout="@layout/fragment_video"/>
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:id="@+id/player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:controller_layout_id="@layout/custom_controls"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -22,5 +20,12 @@
             android:background="@android:color/transparent"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"/>
     </FrameLayout>
 </layout>

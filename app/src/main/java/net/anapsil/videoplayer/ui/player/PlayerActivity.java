@@ -49,8 +49,8 @@ public class PlayerActivity extends BaseActivity<ActivityPlayerBinding, PlayerVi
         getViewModel().prepareAudioPlayer(audioUrl);
         getViewModel().prepareVideoPlayer(videoUrl);
 
-        getBinding().includedView.player.requestFocus();
-        getBinding().includedView.player.setPlayer(getViewModel().getVideoPlayer());
+        getBinding().player.requestFocus();
+        getBinding().player.setPlayer(getViewModel().getVideoPlayer());
     }
 
     @Override

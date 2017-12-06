@@ -21,6 +21,11 @@ public class VideosItemViewModel extends BaseItemViewModel<Content> {
 
     private int position;
     private VideosAdapter adapter;
+    private OnDownloadClickListerner listerner;
+
+    public void setOnDownloadClickListerner(OnDownloadClickListerner listerner) {
+        this.listerner = listerner;
+    }
 
     public int getPosition() {
         return position;
@@ -47,9 +52,18 @@ public class VideosItemViewModel extends BaseItemViewModel<Content> {
         v.getContext().startActivity(intent);
     }
 
+    public void onDownloadClicked(View v) {
+        final Content content = adapter.getObjects().get(position);
+        listerner.onDownloadClicked(content);
+    }
+
     @Override
     protected void setProperties() {
         image.set(String.format("%s/%s", VideoPlayerApplication.getAssetsLocation(), item.getIm()));
         name.set(item.getName().split(" - ")[1]);
+    }
+
+    public interface OnDownloadClickListerner {
+        void onDownloadClicked(Content contentToDownload);
     }
 }

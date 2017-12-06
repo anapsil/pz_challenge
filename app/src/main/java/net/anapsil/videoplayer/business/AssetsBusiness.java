@@ -1,10 +1,20 @@
 package net.anapsil.videoplayer.business;
 
+import android.util.Log;
+
 import net.anapsil.videoplayer.VideoPlayerApplication;
 import net.anapsil.videoplayer.model.Content;
 import net.anapsil.videoplayer.repository.AssetsRepo;
 
+import java.io.File;
+import java.io.IOException;
+
+import io.reactivex.Completable;
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
+import okio.BufferedSink;
+import okio.Okio;
+import retrofit2.Response;
 
 /**
  * @author anapsil
@@ -22,5 +32,31 @@ public class AssetsBusiness {
         return repo.getAssetsList()
                 .doAfterSuccess(assets -> VideoPlayerApplication.setAssetsLocation(assets.getAssetsLocation()))
                 .flatMapObservable(assets -> Observable.fromIterable(assets.getObjects()));
+    }
+
+    public Completable download(final String filename) {
+        return repo.download(String.format("%s/%s", VideoPlayerApplication.getAssetsLocation(), filename))
+                .flatMapCompletable(response -> saveToDisk(response, filename));
+    }
+
+    private Completable saveToDisk(final Response<ResponseBody> response, final String filename) {
+        return Completable.create(subscriber -> {
+            try {
+                File targetFile = new File(String.format("%s/%s", VideoPlayerApplication.getLocalAssetsLocation(), filename));
+                Log.d(getClass().getName(), "Saving file: " + targetFile.getPath());
+
+                BufferedSink bufferedSink = Okio.buffer(Okio.sink(targetFile));
+                bufferedSink.writeAll(response.body().source());
+                bufferedSink.close();
+
+                subscriber.onComplete();
+            } catch (IOException e) {
+                e.printStackTrace();
+                subscriber.onError(e);
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                subscriber.onError(e);
+            }
+        });
     }
 }

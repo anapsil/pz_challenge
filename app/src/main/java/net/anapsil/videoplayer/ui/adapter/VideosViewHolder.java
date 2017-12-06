@@ -6,7 +6,8 @@ import net.anapsil.videoplayer.databinding.ItemVideosBinding;
 import net.anapsil.videoplayer.ui.base.BaseViewHolder;
 
 /**
- * Created by anapsil on 02/12/17.
+ * @author anapsil
+ * @since 1.0.0
  */
 
 public class VideosViewHolder extends BaseViewHolder<ItemVideosBinding, VideosItemViewModel> {

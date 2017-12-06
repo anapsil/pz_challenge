@@ -53,12 +53,15 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp-urlconnection:$rootProject.okhttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+    implementation "com.squareup.okio:okio:$rootProject.okioVersion"
 
     implementation "com.google.android.exoplayer:exoplayer-core:$rootProject.exoplayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-ui:$rootProject.exoplayerVersion"
 
-    implementation "org.parceler:parceler-api:$rootProject.parcelerVersion"
-    annotationProcessor "org.parceler:parceler:$rootProject.parcelerVersion"
+    implementation 'pub.devrel:easypermissions:1.0.1'
+
+    compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1', {

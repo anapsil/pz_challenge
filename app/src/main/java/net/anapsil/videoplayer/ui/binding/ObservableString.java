@@ -2,14 +2,11 @@ package net.anapsil.videoplayer.ui.binding;
 
 import android.databinding.BaseObservable;
 
-import org.parceler.Parcel;
-
 /**
  * @author anapsil
  * @since 1.0.0
  */
 
-@Parcel
 public class ObservableString extends BaseObservable {
     String value;
 

@@ -1,14 +1,19 @@
 package net.anapsil.videoplayer.remote;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import net.anapsil.videoplayer.model.Assets;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
+import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
 /**
@@ -24,6 +29,9 @@ public final class MediaServiceGenerator {
     private MediaServiceGenerator() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .client(new OkHttpClient.Builder()
+                        .addNetworkInterceptor(new StethoInterceptor())
+                        .build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -43,9 +51,10 @@ public final class MediaServiceGenerator {
     public interface MediaService {
 
         @GET("assets.json")
-        public Single<Assets> getAssetsList();
+        Single<Assets> getAssetsList();
 
+        @Streaming
         @GET
-        public Call<ResponseBody> getAsset(@Url String url);
+        Observable<Response<ResponseBody>> downloadFile(@Url String url);
     }
 }

@@ -17,9 +17,11 @@ import java.util.ArrayList;
 
 public class VideosAdapter extends RecyclerView.Adapter<VideosViewHolder> {
     private ArrayList<Content> objects;
+    private VideosItemViewModel.OnDownloadClickListerner listener;
 
-    public VideosAdapter() {
+    public VideosAdapter(VideosItemViewModel.OnDownloadClickListerner listener) {
         objects = new ArrayList<>();
+        this.listener = listener;
     }
 
     public ArrayList<Content> getObjects() {
@@ -42,6 +44,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosViewHolder> {
         holder.getViewModel().update(objects.get(position));
         holder.getViewModel().setAdapter(this);
         holder.getViewModel().setPosition(position);
+        holder.getViewModel().setOnDownloadClickListerner(listener);
         holder.executePendingBindings();
     }
 

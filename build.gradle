@@ -8,10 +8,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
-        
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
@@ -40,7 +36,7 @@ ext {
     retrofitVersion = "2.3.0"
     okhttpVersion = "3.8.1"
     picassoVersion = "2.5.2"
-    dagger2Version = '2.11'
+    okioVersion = '1.13.0'
     parcelerVersion = "1.1.9"
     exoplayerVersion = "2.6.0"
 }

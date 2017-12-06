@@ -3,9 +3,10 @@ package net.anapsil.videoplayer.repository;
 import net.anapsil.videoplayer.model.Assets;
 import net.anapsil.videoplayer.remote.MediaServiceGenerator.MediaService;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * @author anapsil
@@ -23,7 +24,7 @@ public class AssetsRepo {
         return mediaService.getAssetsList();
     }
 
-    public Call<ResponseBody> getAsset(String url) {
-        return mediaService.getAsset(url);
+    public Observable<Response<ResponseBody>> download(String url) {
+        return mediaService.downloadFile(url);
     }
 }

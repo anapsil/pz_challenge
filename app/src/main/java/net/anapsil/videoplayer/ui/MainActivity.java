@@ -1,18 +1,21 @@
 package net.anapsil.videoplayer.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import net.anapsil.videoplayer.R;
 import net.anapsil.videoplayer.databinding.ActivityMainBinding;
 import net.anapsil.videoplayer.ui.base.BaseActivity;
 
+import pub.devrel.easypermissions.EasyPermissions;
+
 /**
- * Created by anapsil on 02/12/17.
+ * @author anapsil
+ * @since 1.0.0
  */
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
-    boolean isList = false;
     private MainViewModel viewModel;
 
     @Override
@@ -21,8 +24,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         setSupportActionBar(getBinding().toolbar);
 
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-
-
     }
 
     @Override
@@ -30,6 +31,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         super.onPostCreate(savedInstanceState);
         getBinding().videosList.setHasFixedSize(true);
         getBinding().videosList.setAdapter(getViewModel().getAdapter());
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     @Override
