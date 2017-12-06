@@ -22,7 +22,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * @since 1.0.0
  */
 
-public class MainViewModel extends BaseViewModel implements VideosItemViewModel.OnDownloadClickListerner {
+public class MainViewModel extends BaseViewModel implements VideosItemViewModel.OnDownloadClickListener {
     private static final int RC_WRITE_STORAGE = 123;
     private Context context;
     private VideosAdapter adapter;
@@ -47,19 +47,22 @@ public class MainViewModel extends BaseViewModel implements VideosItemViewModel.
     }
 
     @Override
-    public void onDownloadClicked(Content contentToDownload) {
-        downloadContent(contentToDownload);
+    public void onDownloadClicked(Content contentToDownload, int position) {
+        downloadContent(contentToDownload, position);
     }
 
     @AfterPermissionGranted(RC_WRITE_STORAGE)
-    public void downloadContent(Content content) {
+    public void downloadContent(Content content, final int position) {
         if (EasyPermissions.hasPermissions(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             Log.d(getClass().getName(), "Permission granted, starting download...");
             compositeDisposable.add(business.download(content.getBg())
                     .concatWith(business.download(content.getSg()))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> Log.d(getClass().getName(), "Download Completed"), Throwable::printStackTrace));
+                    .subscribe(() -> {
+                        Log.d(getClass().getName(), "Download Completed");
+                        adapter.notifyDownloadCompleted(position);
+                    }, Throwable::printStackTrace));
         } else {
             EasyPermissions.requestPermissions((MainActivity) context, "", RC_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }

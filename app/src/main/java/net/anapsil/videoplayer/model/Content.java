@@ -1,8 +1,8 @@
 package net.anapsil.videoplayer.model;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,9 +11,9 @@ import java.util.List;
  */
 
 public class Content implements Parcelable {
-    public static final Parcelable.Creator<Content> CREATOR = new Parcelable.Creator<Content>() {
+    public static final Creator<Content> CREATOR = new Creator<Content>() {
         @Override
-        public Content createFromParcel(android.os.Parcel source) {
+        public Content createFromParcel(Parcel source) {
             return new Content(source);
         }
 
@@ -27,17 +27,20 @@ public class Content implements Parcelable {
     private String im;
     private String sg;
     private List<Text> txts;
+    private boolean isLoading;
+    private boolean isDownloaded;
 
     public Content() {
     }
 
-    protected Content(android.os.Parcel in) {
+    protected Content(Parcel in) {
         this.name = in.readString();
         this.bg = in.readString();
         this.im = in.readString();
         this.sg = in.readString();
-        this.txts = new ArrayList<Text>();
-        in.readList(this.txts, Text.class.getClassLoader());
+        this.txts = in.createTypedArrayList(Text.CREATOR);
+        this.isLoading = in.readByte() != 0;
+        this.isDownloaded = in.readByte() != 0;
     }
 
     public String getName() {
@@ -80,17 +83,35 @@ public class Content implements Parcelable {
         this.txts = txts;
     }
 
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+    }
+
+    public boolean isDownloaded() {
+        return isDownloaded;
+    }
+
+    public void setDownloaded(boolean downloaded) {
+        isDownloaded = downloaded;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(android.os.Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
         dest.writeString(this.bg);
         dest.writeString(this.im);
         dest.writeString(this.sg);
-        dest.writeList(this.txts);
+        dest.writeTypedList(this.txts);
+        dest.writeByte(this.isLoading ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isDownloaded ? (byte) 1 : (byte) 0);
     }
 }

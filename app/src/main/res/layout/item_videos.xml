@@ -8,6 +8,8 @@
         <variable
             name="vm"
             type="net.anapsil.videoplayer.ui.adapter.VideosItemViewModel"/>
+
+        <import type="android.view.View"/>
     </data>
 
     <android.support.v7.widget.CardView
@@ -33,22 +35,46 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thumb"
                 android:layout_margin="8dp"
-                android:layout_toStartOf="@+id/download"
+                android:layout_toStartOf="@+id/download_control"
                 android:ellipsize="end"
                 android:maxLines="1"
                 app:binding="@{vm.name}"
                 tools:text="Blue Lines"/>
 
-            <android.support.v7.widget.AppCompatImageButton
-                android:id="@id/download"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+            <FrameLayout
+                android:id="@id/download_control"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@id/thumb"
-                android:layout_margin="8dp"
-                android:alpha="0.54"
-                android:onClick="@{vm::onDownloadClicked}"
-                app:srcCompat="@drawable/ic_cloud_download"/>
+                android:layout_below="@id/thumb">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/download"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:alpha="0.54"
+                    android:onClick="@{vm::onDownloadClicked}"
+                    android:visibility="@{!vm.isDownloaded ? View.VISIBLE : View.GONE}"
+                    app:srcCompat="@drawable/ic_cloud_download"/>
+
+                <ProgressBar
+                    android:id="@+id/item_loading"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:visibility="@{vm.isLoading ? View.VISIBLE : View.GONE}"/>
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/play"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:alpha="0.54"
+                    android:onClick="@{vm::onItemClick}"
+                    android:visibility="@{vm.isDownloaded ? View.VISIBLE : View.GONE}"
+                    app:srcCompat="@drawable/ic_play"/>
+            </FrameLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </layout>
