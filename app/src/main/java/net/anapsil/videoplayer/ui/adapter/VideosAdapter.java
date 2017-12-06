@@ -53,6 +53,11 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosViewHolder> {
         return objects.size();
     }
 
+    public void notifyDownloadStarted(int position) {
+        objects.get(position).setLoading(true);
+        notifyItemChanged(position);
+    }
+
     public void notifyDownloadCompleted(int position) {
         objects.get(position).setLoading(false);
         objects.get(position).setDownloaded(true);

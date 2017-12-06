@@ -32,9 +32,9 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStop() {
         viewModel.onDestroyView();
-        super.onDestroy();
+        super.onStop();
     }
 
     private void performDataBinding() {

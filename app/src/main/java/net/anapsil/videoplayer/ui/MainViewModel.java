@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.util.Log;
 
+import net.anapsil.videoplayer.VideoPlayerApplication;
 import net.anapsil.videoplayer.business.AssetsBusiness;
 import net.anapsil.videoplayer.model.Content;
 import net.anapsil.videoplayer.remote.MediaServiceGenerator;
@@ -52,19 +53,27 @@ public class MainViewModel extends BaseViewModel implements VideosItemViewModel.
     }
 
     @AfterPermissionGranted(RC_WRITE_STORAGE)
-    public void downloadContent(Content content, final int position) {
+    public void downloadContent(final Content content, final int position) {
         if (EasyPermissions.hasPermissions(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             Log.d(getClass().getName(), "Permission granted, starting download...");
+            adapter.notifyDownloadStarted(position);
             compositeDisposable.add(business.download(content.getBg())
                     .concatWith(business.download(content.getSg()))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
                         Log.d(getClass().getName(), "Download Completed");
+                        business.addDownloadedContent(content);
                         adapter.notifyDownloadCompleted(position);
                     }, Throwable::printStackTrace));
         } else {
             EasyPermissions.requestPermissions((MainActivity) context, "", RC_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        VideoPlayerApplication.saveDownloadedContent();
+        super.onDestroyView();
     }
 }

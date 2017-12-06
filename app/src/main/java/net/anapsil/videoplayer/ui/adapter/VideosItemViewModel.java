@@ -57,7 +57,6 @@ public class VideosItemViewModel extends BaseItemViewModel<Content> {
 
     public void onDownloadClicked(View v) {
         final Content content = adapter.getObjects().get(position);
-        isLoading.set(true);
         listener.onDownloadClicked(content, position);
     }
 

@@ -44,8 +44,10 @@ public class PlayerActivity extends BaseActivity<ActivityPlayerBinding, PlayerVi
     }
 
     private void setupPlayer() {
-        String videoUrl = String.format("%s/%s", VideoPlayerApplication.getAssetsLocation(), contentList.get(selectedItem).getBg());
-        String audioUrl = String.format("%s/%s", VideoPlayerApplication.getAssetsLocation(), contentList.get(selectedItem).getSg());
+        Content selectedContent = contentList.get(selectedItem);
+        String assetsLocation = selectedContent.isDownloaded() ? VideoPlayerApplication.getLocalAssetsLocation() : VideoPlayerApplication.getAssetsLocation();
+        String videoUrl = String.format("%s/%s", assetsLocation, selectedContent.getBg());
+        String audioUrl = String.format("%s/%s", assetsLocation, selectedContent.getSg());
         getViewModel().prepareAudioPlayer(audioUrl);
         getViewModel().prepareVideoPlayer(videoUrl);
 

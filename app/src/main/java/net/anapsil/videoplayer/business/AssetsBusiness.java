@@ -29,14 +29,34 @@ public class AssetsBusiness {
     }
 
     public Observable<Content> getContents() {
+        return getRemoteContent().map(content -> {
+            for (Content downloadedContent : VideoPlayerApplication.getDownloadedContent()) {
+                if (content.getName().equals(downloadedContent.getName())) {
+                    return downloadedContent;
+                }
+            }
+
+            return content;
+        });
+    }
+
+    private Observable<Content> getRemoteContent() {
         return repo.getAssetsList()
                 .doAfterSuccess(assets -> VideoPlayerApplication.setAssetsLocation(assets.getAssetsLocation()))
                 .flatMapObservable(assets -> Observable.fromIterable(assets.getObjects()));
     }
 
+    private Observable<Content> getLocalContent() {
+        return Observable.fromIterable(VideoPlayerApplication.getDownloadedContent());
+    }
+
     public Completable download(final String filename) {
         return repo.download(String.format("%s/%s", VideoPlayerApplication.getAssetsLocation(), filename))
                 .flatMapCompletable(response -> saveToDisk(response, filename));
+    }
+
+    public void addDownloadedContent(Content content) {
+        VideoPlayerApplication.getDownloadedContent().add(content);
     }
 
     private Completable saveToDisk(final Response<ResponseBody> response, final String filename) {
