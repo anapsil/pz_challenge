@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Video Player</string>
+    <string name="rationale_storage">This app needs access to your device storage to download the requested content.</string>
 </resources>

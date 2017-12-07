@@ -39,4 +39,6 @@ ext {
     okioVersion = '1.13.0'
     parcelerVersion = "1.1.9"
     exoplayerVersion = "2.6.0"
+    easyPermissionsVersion = "1.0.1"
+    stethoVersion = "1.5.0"
 }

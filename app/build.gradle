@@ -58,10 +58,10 @@ dependencies {
     implementation "com.google.android.exoplayer:exoplayer-core:$rootProject.exoplayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-ui:$rootProject.exoplayerVersion"
 
-    implementation 'pub.devrel:easypermissions:1.0.1'
+    implementation "pub.devrel:easypermissions:$rootProject.easyPermissionsVersion"
 
-    compile 'com.facebook.stetho:stetho:1.5.0'
-    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
+    compile "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1', {

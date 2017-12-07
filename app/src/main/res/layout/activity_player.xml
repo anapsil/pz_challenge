@@ -2,6 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="vm"
+            type="net.anapsil.videoplayer.ui.player.PlayerViewModel"/>
+
+        <import type="android.view.View"/>
+    </data>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminate="true"/>
+            android:indeterminate="true"
+            android:visibility="@{vm.isLoading ? View.VISIBLE : View.GONE}"/>
     </FrameLayout>
 </layout>

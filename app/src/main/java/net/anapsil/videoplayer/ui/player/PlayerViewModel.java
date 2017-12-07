@@ -1,6 +1,7 @@
 package net.anapsil.videoplayer.ui.player;
 
 import android.content.Context;
+import android.databinding.ObservableBoolean;
 import android.net.Uri;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -31,6 +32,7 @@ import net.anapsil.videoplayer.ui.base.viewmodel.BaseViewModel;
  */
 
 public class PlayerViewModel extends BaseViewModel {
+    public ObservableBoolean isLoading = new ObservableBoolean(false);
     private SimpleExoPlayer audioPlayer;
     private SimpleExoPlayer videoPlayer;
 
@@ -63,7 +65,13 @@ public class PlayerViewModel extends BaseViewModel {
     public void prepareAudioPlayer(String url) {
         MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(url), dataSourceFactory, extractorsFactory, null, null);
         audioPlayer.prepare(mediaSource);
-        audioPlayer.addListener(new AudioSyncEventListener(videoPlayer));
+        audioPlayer.addListener(new AudioSyncEventListener(videoPlayer) {
+            @Override
+            public void onLoadingChanged(boolean isLoading) {
+                super.onLoadingChanged(isLoading);
+                PlayerViewModel.this.isLoading.set(isLoading);
+            }
+        });
     }
 
     public void prepareVideoPlayer(String url) {

@@ -8,6 +8,7 @@ import net.anapsil.videoplayer.R;
 import net.anapsil.videoplayer.databinding.ActivityMainBinding;
 import net.anapsil.videoplayer.ui.base.BaseActivity;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -53,5 +54,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected MainViewModel getViewModel() {
         return viewModel;
+    }
+
+    @AfterPermissionGranted(MainViewModel.RC_WRITE_STORAGE)
+    public void download() {
+        getViewModel().downloadContent();
     }
 }
