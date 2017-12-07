@@ -8,7 +8,7 @@ Architecture: MVVM with DataBinding
 
 #### Used libraries
 * RxJava2 and RxAndroid
-* Retroit2
+* Retrofit2
 * OkHttp 3
 * Okio
 * Picasso
